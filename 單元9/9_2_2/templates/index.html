@@ -1,0 +1,185 @@
+<html>
+<head>
+	<title>Ajax Test</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>  
+
+<style type="text/css">
+	button[type=playrobot]{
+		width:150px;
+		height:60px;
+		padding: 14.5px 29px;
+		border: 1px solid #C7C7C7;
+		background: -webkit-gradient(linear, left top, left bottom, from(#FFCFCF), to(#BF1B1B));
+		background: -webkit-linear-gradient(top, #FFCFCF, #BF1B1B);
+		background: -moz-linear-gradient(top, #FFCFCF, #BF1B1B);
+		background: -ms-linear-gradient(top, #FFCFCF, #BF1B1B);
+		background: -o-linear-gradient(top, #FFCFCF, #BF1B1B);
+		background-color: #BF1B1B;
+		box-shadow: 0px 7px 2px -5px #1A1A1A, inset 0px 0px 3px #9C0000;
+		-webkit-box-shadow: 0px 7px 2px -5px #1A1A1A, inset 0px 0px 3px #9C0000;
+		-moz-box-shadow: 0px 7px 2px -5px #1A1A1A, inset 0px 0px 3px #9C0000;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px;
+		text-shadow: #472222 1px 1px 0px;
+		color: #FFFFFF;
+		font-size: 20px;
+		font-family: '微軟正黑體';
+		text-decoration: none;
+		font-weight: bold;
+		-webkit-transition: 0.4s;
+		-moz-transition: 0.4s;
+		-o-transition: 0.4s;
+		cursor: pointer;
+		}
+	button[type=playrobot]:hover{
+		background: none;
+		background-color: #BF1B1B;
+		box-shadow: 0px 0px 5px 0px #AAAAAA;
+		-webkit-box-shadow: 0px 0px 5px 0px #AAAAAA;
+		-moz-box-shadow: 0px 0px 5px 0px #AAAAAA;
+		border: 1px solid #ffffff;
+		color: #CEE663;
+		}
+	button[type=playrobot]:active{
+		top: 1px;
+		position: relative;
+		}
+	
+	body {
+		background: -webkit-linear-gradient(left top,#f0f0f0,#808080);
+		background: -o-linear-gradient(bottom right,#f0f0f0,#808080);
+		background: -moz-linear-gradient(bottom right,#f0f0f0,#808080);
+		background: linear-gradient(to bottom right,#f0f0f0,#808080);
+		font-weight: bold;
+		font-size: 20px;
+		font-family: '微軟正黑體';
+	}
+	
+	tabel {
+		border:8px
+		border-color:#FFD382
+	}
+	#result {
+		display: inline-block;
+		position: relative;
+		font-weight: 500;
+		font-size: 48px;
+		color: transparent;
+		animation: hue 15s linear infinite;
+		background-image: linear-gradient(to right bottom, rgb(255,0,0), rgb(255,128,0), rgb(255,255,0), rgb(0,255,0), rgb(0,255,128), rgb(0,255,255), rgb(0,128,255), rgb(0,0,255), rgb(128,0,255), rgb(255,0,255), rgb(255,0,128));
+		-webkit-background-clip: text;
+	}
+	@keyframes hue {
+		from {
+			filter: hue-rotate(0);
+		}
+		to {
+			filter: hue-rotate(-360deg);
+		}
+	}
+
+</style>
+</head>
+<body>
+	<table style="border:15px #DC143C groove;" cellpadding="0" border='0'>
+	<tr>
+	<td colspan="3" align="center"><iframe src="http://127.0.0.1:8080/?action=stream?dummy=param.mjpg" frameborder="no" scrolling="no" border="0"></iframe></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><button type=playrobot id="front">前進</button></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td><button type=playrobot id="left">左轉</button></td>
+		<td><button type=playrobot id="stop">停止</button></td>
+		<td><button type=playrobot id="right">右轉</button></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><button type=playrobot id="back">後退</button></td>
+		<td></td>
+	</tr>
+	</table>
+	<div id="result">
+	</div>
+
+
+<script type="text/javascript">
+	$("#front").click(function()
+	{
+		//發送字元給後台flask
+		//後台回傳>>data，狀態>>status
+		$.post("/test",{message:"f"}, function(data,status){
+			if(status == "success")
+			{
+				$("#result").html(data);
+			}
+			else
+			{
+				alert("Ajax fail");
+			}
+		});
+	});
+	
+	$("#left").click(function()
+	{
+		$.post("/test",{message:"l"}, function(data,status){
+			if(status == "success")
+			{
+				$("#result").html(data);
+			}
+			else
+			{
+				alert("Ajax fail");
+			}
+		});
+	});
+	
+	$("#right").click(function()
+	{
+		$.post("/test",{message:"r"}, function(data,status){
+			if(status == "success")
+			{
+				$("#result").html(data);
+			}
+			else
+			{
+				alert("Ajax fail");
+			}
+		});
+	});
+
+	$("#back").click(function()
+	{
+		$.post("/test",{message:"b"}, function(data,status){
+			if(status == "success")
+			{
+				$("#result").html(data);
+			}
+			else
+			{
+				alert("Ajax fail");
+			}
+		});
+	});
+
+	$("#stop").click(function()
+	{
+		$.post("/test",{message:"s"}, function(data,status){
+			if(status == "success")
+			{
+				$("#result").html(data);
+			}
+			else
+			{
+				alert("Ajax fail");
+			}
+		});
+	});
+</script>
+
+</body>
+</html>
